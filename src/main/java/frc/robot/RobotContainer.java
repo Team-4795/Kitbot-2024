@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain.Drivetrain;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -24,6 +27,17 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    drive.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> drive.drive(
+                -MathUtil.applyDeadband(OIConstants.m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(OIConstants.m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(OIConstants.m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                true, true),
+            drive));
   }
 
   /**
