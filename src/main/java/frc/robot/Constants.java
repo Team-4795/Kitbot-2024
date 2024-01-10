@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public final class Constants {
   public static class OIConstants {
     public static final CommandXboxController m_driverController = new CommandXboxController(0);
+    public static final double kDriveDeadband = 0.05;
 
   }
 }

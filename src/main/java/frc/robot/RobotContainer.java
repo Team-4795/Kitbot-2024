@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain.Drivetrain;
+import frc.robot.subsystems.Shooter.Shooter;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
 
   private final Drivetrain drive = new Drivetrain();
+  private final Shooter shooter = new Shooter(); 
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -50,8 +53,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-
-
+    OIConstants.m_driverController.a().onTrue(new InstantCommand(shooter::Outake));
+    OIConstants.m_driverController.a().onFalse(new InstantCommand(shooter::Stop));
+    OIConstants.m_driverController.b().onTrue(new InstantCommand(shooter::Intake));
+    OIConstants.m_driverController.b().onFalse(new InstantCommand(shooter::Stop));
   }
 
   /**
