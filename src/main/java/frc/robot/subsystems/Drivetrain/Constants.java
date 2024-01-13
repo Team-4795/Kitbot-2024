@@ -27,7 +27,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
+    public static final double kMaxSpeedMetersPerSecond = 1.0;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 6.0; // radians per second
@@ -53,13 +53,13 @@ public final class Constants {
 
     // SPARK MAX CAN IDs
     public static final int kFrontLeftDrivingCanId = 4;
-    public static final int kRearLeftDrivingCanId = 8;
-    public static final int kFrontRightDrivingCanId = 2;
+    public static final int kRearLeftDrivingCanId = 2;
+    public static final int kFrontRightDrivingCanId = 8;
     public static final int kRearRightDrivingCanId = 6;
 
     public static final int kFrontLeftTurningCanId = 5;
-    public static final int kRearLeftTurningCanId = 9;
-    public static final int kFrontRightTurningCanId = 3;
+    public static final int kRearLeftTurningCanId = 3;
+    public static final int kFrontRightTurningCanId = 9;
     public static final int kRearRightTurningCanId = 7;
 
     public static final boolean kGyroReversed = false;
@@ -112,7 +112,7 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; // amps
+    public static final int kDrivingMotorCurrentLimit = 30; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
 
