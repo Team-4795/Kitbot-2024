@@ -18,6 +18,7 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain.Constants.DriveConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -83,6 +84,8 @@ public class Drivetrain extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+    SmartDashboard.putNumber("Gryo Z Rotation", m_gyro.getAngle());
+    SmartDashboard.putNumberArray("Swerve States", this.getModuleStates()); 
   }
 
   /**
@@ -93,6 +96,19 @@ public class Drivetrain extends SubsystemBase {
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
+
+  public double[] getModuleStates() {
+    double[] swerveStates = new double[8];
+    swerveStates[0] = m_frontLeft.getState().angle.getDegrees();
+    swerveStates[1] = m_frontLeft.getState().speedMetersPerSecond;
+    swerveStates[2] = m_frontRight.getState().angle.getDegrees();
+    swerveStates[3] = m_frontRight.getState().speedMetersPerSecond;
+    swerveStates[4] = m_rearLeft.getState().angle.getDegrees();
+    swerveStates[5] = m_rearLeft.getState().speedMetersPerSecond;
+    swerveStates[6] = m_rearRight.getState().angle.getDegrees();
+    swerveStates[7] = m_rearRight.getState().speedMetersPerSecond;
+    return swerveStates;
+}
 
   /**
    * Resets the odometry to the specified pose.
@@ -181,7 +197,7 @@ public class Drivetrain extends SubsystemBase {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(m_gyro.getAngle()))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(-m_gyro.getAngle()))
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
