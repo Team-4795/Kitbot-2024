@@ -63,6 +63,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    OIConstants.m_driverController.rightBumper().onTrue(new InstantCommand(drive::zeroHeading));
     OIConstants.m_driverController.a().onTrue(new InstantCommand(shooter::Outake));
     OIConstants.m_driverController.a().onFalse(new InstantCommand(shooter::Stop));
     OIConstants.m_driverController.b().onTrue(new InstantCommand(shooter::Intake));

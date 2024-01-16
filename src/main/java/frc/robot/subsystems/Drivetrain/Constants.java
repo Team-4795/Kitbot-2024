@@ -30,9 +30,9 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
-    public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
+    public static final double kDirectionSlewRate = 6.0; // radians per second
+    public static final double kMagnitudeSlewRate = 6.0; // percent per second (1 = 100%)
+    public static final double kRotationalSlewRate = 6.0; // percent per second (1 = 100%)
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
@@ -51,16 +51,18 @@ public final class Constants {
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
-    // SPARK MAX CAN IDs / CHANGE
-    public static final int kFrontLeftDrivingCanId = 1;
+
+    // SPARK MAX CAN IDs
+    public static final int kFrontLeftDrivingCanId = 4;
     public static final int kRearLeftDrivingCanId = 2;
-    public static final int kFrontRightDrivingCanId = 3;
-    public static final int kRearRightDrivingCanId = 4;
+    public static final int kFrontRightDrivingCanId = 8;
+    public static final int kRearRightDrivingCanId = 6;
 
     public static final int kFrontLeftTurningCanId = 5;
-    public static final int kRearLeftTurningCanId = 6;
-    public static final int kFrontRightTurningCanId = 7;
-    public static final int kRearRightTurningCanId = 8;
+    public static final int kRearLeftTurningCanId = 3;
+    public static final int kFrontRightTurningCanId = 9;
+    public static final int kRearRightTurningCanId = 7;
+
 
     public static final boolean kGyroReversed = false;
   }
@@ -77,7 +79,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.0762;
+    public static final double kWheelDiameterMeters = Units.inchesToMeters(2.9);
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
@@ -112,7 +114,7 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; // amps
+    public static final int kDrivingMotorCurrentLimit = 30; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
 
@@ -132,6 +134,6 @@ public final class Constants {
   }
 
   public static final class NeoMotorConstants {
-    public static final double kFreeSpeedRpm = 5676;
+    public static final double kFreeSpeedRpm = 6784;
   }
 }
