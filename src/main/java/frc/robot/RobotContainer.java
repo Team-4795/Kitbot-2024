@@ -5,10 +5,11 @@
 package frc.robot;
 
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AutoCommands;
 import frc.robot.subsystems.Drivetrain.Drivetrain;
 import frc.robot.subsystems.Shooter.Shooter;
-
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,12 +31,17 @@ public class RobotContainer {
   private final Drivetrain drive = new Drivetrain();
   private final Shooter shooter = new Shooter(); 
   private final SendableChooser<Command> autoChooser;
-
+  private final AutoCommands autocommands  = new AutoCommands(shooter);
+ 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    NamedCommands.registerCommand("Outake Amp" , autocommands.OutakeAmp());
+    NamedCommands.registerCommand("Outake speaker" , autocommands.OutakeSpeaker());
+    //TODO: put every command into a list so we can register commands in one line
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -51,6 +57,7 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(OIConstants.m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true, true),
             drive));
+
   }
 
   /**
@@ -64,7 +71,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     OIConstants.m_driverController.rightBumper().onTrue(new InstantCommand(drive::zeroHeading));
-    OIConstants.m_driverController.a().onTrue(new InstantCommand(shooter::Outake));
+    OIConstants.m_driverController.a().onTrue(new InstantCommand(() -> shooter.Outake(0.5)));
     OIConstants.m_driverController.a().onFalse(new InstantCommand(shooter::Stop));
     OIConstants.m_driverController.b().onTrue(new InstantCommand(shooter::Intake));
     OIConstants.m_driverController.b().onFalse(new InstantCommand(shooter::Stop));

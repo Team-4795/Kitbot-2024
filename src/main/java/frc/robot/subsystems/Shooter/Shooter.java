@@ -16,8 +16,8 @@ public class Shooter extends SubsystemBase {
         Shootermotor2.burnFlash();
     }
 
-    public void Outake() {
-        Shootermotor.set(Constants.OutakeSpeed1);
+    public void Outake(double speed) {
+        Shootermotor.set(speed);
     }
 
     public void Intake() {
