@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.Kraken;
 import frc.robot.subsystems.Drivetrain.Drivetrain;
 import frc.robot.subsystems.Shooter.Shooter;
 
@@ -30,6 +31,7 @@ public class RobotContainer {
   private final Drivetrain drive = new Drivetrain();
   private final Shooter shooter = new Shooter(); 
   private final SendableChooser<Command> autoChooser;
+  private final Kraken kraken = new Kraken();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -64,10 +66,10 @@ public class RobotContainer {
    */
   private void configureBindings() {
     OIConstants.m_driverController.rightBumper().onTrue(new InstantCommand(drive::zeroHeading));
-    OIConstants.m_driverController.a().onTrue(new InstantCommand(shooter::Outake));
-    OIConstants.m_driverController.a().onFalse(new InstantCommand(shooter::Stop));
-    OIConstants.m_driverController.b().onTrue(new InstantCommand(shooter::Intake));
-    OIConstants.m_driverController.b().onFalse(new InstantCommand(shooter::Stop));
+    OIConstants.m_driverController.a().onTrue(new InstantCommand(() -> kraken.spinMotor(0.5)));
+    OIConstants.m_driverController.a().onFalse(new InstantCommand(() -> kraken.spinMotor(0)));
+    OIConstants.m_driverController.a().onTrue(new InstantCommand(() -> kraken.spinMotor(-0.5)));
+    OIConstants.m_driverController.a().onFalse(new InstantCommand(() -> kraken.spinMotor(0)));
   }
 
   /**
